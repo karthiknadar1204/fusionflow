@@ -132,7 +132,7 @@ const ImagePage = () => {
                 )}
               />
 
-<FormField
+            <FormField
               control={form.control}
               name="amount"
               render={({ field }) => (
@@ -163,7 +163,7 @@ const ImagePage = () => {
               )}
             />
 
-<FormField
+            <FormField
               control={form.control}
               name="resolution"
               render={({ field }) => (
