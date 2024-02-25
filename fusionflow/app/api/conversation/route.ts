@@ -12,7 +12,7 @@ const openai = new OpenAI({
     try {
         const { userId } = auth();
         const body = await req.json();
-        const { messages  } = body;
+        const { messages  } = body; 
 
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });

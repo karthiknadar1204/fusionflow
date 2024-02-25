@@ -22,10 +22,13 @@ import { UserAvatar } from '@/components/user-avatar';
 import { BotAvatar } from '@/components/bot-avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { amountOptions,resolutionOptions } from "./constants";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const ImagePage = () => {
 
     const router = useRouter();
+    const proModal = useProModal();
+
     const [images, setImages] = useState<string[]>([]);
 
 
@@ -82,7 +85,11 @@ const ImagePage = () => {
           form.reset();
         } catch (error: any) {
           console.error(error);
-          // Handle the error as needed
+          if (error?.response?.status === 403) {
+            proModal.onOpen();
+          } else {
+            toast.error("Something went wrong.");
+          }
         } finally {
           router.refresh();
         }

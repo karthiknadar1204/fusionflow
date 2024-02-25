@@ -153,9 +153,12 @@ import { Loader } from "@/components/loader";
 import Empty from "@/components/empty";
 
 import { formSchema } from "./constants";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const MusicPage = () => {
   const router = useRouter();
+  const proModal = useProModal();
+
   const [music, setMusic] = useState<string>();
 
   const form = useForm<z.infer<typeof formSchema>>({

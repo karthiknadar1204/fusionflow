@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Montserrat } from 'next/font/google'
 import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { FreeCounter } from './free-counter';
 
 const poppins = Montserrat ({ weight: '600', subsets: ['latin'] });
 
@@ -55,7 +56,11 @@ const routes = [
   ];
   
 
-const Sidebar = () => {
+const Sidebar = ({
+  apiLimitCount = 0
+}:{
+  apiLimitCount: number;
+}) => {
 
   const pathname=usePathname();
 
@@ -90,6 +95,9 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+    <FreeCounter
+    apiLimitCount={apiLimitCount} 
+    />
     </div>
   )
 }
