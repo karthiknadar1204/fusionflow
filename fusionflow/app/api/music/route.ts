@@ -23,7 +23,7 @@ const replicate = new Replicate({
             return new NextResponse("Prompt is required", { status: 400 });
           }
 
-
+          const freeTrial = await checkApiLimit();
           const isPro = await checkSubscription();
 
           if (!freeTrial && !isPro) {
