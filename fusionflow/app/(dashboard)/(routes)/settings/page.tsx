@@ -1,6 +1,6 @@
 import { Settings } from "lucide-react";
 
-import { Heading } from "@/components/heading";
+import { Heading__second } from "@/components/Heading__second";
 import { SubscriptionButton } from "@/components/subscription-button";
 import { checkSubscription } from "@/lib/subscription";
 
@@ -9,7 +9,7 @@ const SettingsPage = async () => {
 
   return ( 
     <div>
-      <Heading
+      <Heading__second
         title="Settings"
         description="Manage account settings."
         icon={Settings}

@@ -13,7 +13,7 @@ import {
   VideoIcon,
 } from "lucide-react";
 import React from "react";
-import { Heading } from "@/components/Heading";
+import { Heading__second } from "@/components/Heading__second";
 
 const tools = [
   {
@@ -66,7 +66,7 @@ const DashboardPage = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="flex-grow flex flex-col">
         <div className="mt-8">
-          <Heading
+          <Heading__second
             title="AI Innovation Hub"
             description="Unleash the potential of cutting-edge AI technologies"
             icon={CodeIcon}

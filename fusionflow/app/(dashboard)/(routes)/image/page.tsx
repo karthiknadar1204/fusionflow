@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import * as z from "zod";
-import { Heading } from '@/components/Heading'
+import { Heading__second } from '@/components/Heading__second'
 import React from 'react'
 import Image from "next/image";
 import { Download, ImageIcon } from "lucide-react";
@@ -68,7 +68,7 @@ const ImagePage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
             <div className="pt-8 sm:pt-12 md:pt-16">
-                <Heading
+                <Heading__second
                     title="AI Image Generation"
                     description="Transform your ideas into stunning visuals with our AI artist."
                     icon={ImageIcon}

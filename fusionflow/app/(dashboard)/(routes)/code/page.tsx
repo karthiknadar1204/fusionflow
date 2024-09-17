@@ -2,9 +2,9 @@
 
 import axios from 'axios';
 import * as z from "zod";
-import { Heading } from '@/components/Heading'
+import { Heading__second } from '@/components/Heading__second'
 import React from 'react'
-import { Code, MessageSquare } from "lucide-react";
+import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,18 +14,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChatCompletionRequestMessage } from "openai";
+import OpenAI from "openai";
 import Empty from '@/components/empty';
 import { Loader } from '@/components/loader';
 import { UserAvatar } from '@/components/user-avatar';
 import { BotAvatar } from '@/components/bot-avatar';
 import ReactMarkdown from "react-markdown";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { toast } from "react-hot-toast";
+
+type Message = OpenAI.Chat.ChatCompletionMessage;
 
 const CodePage = () => {
     const router = useRouter();
     const proModal = useProModal();
-    const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,7 +42,7 @@ const CodePage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(values);
         try {
-            const userMessage: ChatCompletionRequestMessage = { role: "user", content: values.prompt };
+            const userMessage: Message = { role: "user", content: values.prompt };
             const newMessages = [...messages, userMessage];
 
             const response = await axios.post('/api/code', { messages: newMessages });
@@ -61,7 +64,7 @@ const CodePage = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
             <div className="pt-8 sm:pt-12 md:pt-16">
-                <Heading
+                <Heading__second
                     title="AI Code Generation"
                     description="Transform your ideas into code with our AI assistant."
                     icon={Code}
@@ -124,7 +127,7 @@ const CodePage = () => {
                         <div className="flex flex-col-reverse gap-y-4">
                             {messages.map((message) => (
                                 <div 
-                                    key={message.content} 
+                                    key={typeof message.content === 'string' ? message.content : 'non-string-content'}
                                     className={cn(
                                         "p-6 w-full flex items-start gap-x-4 rounded-lg",
                                         message.role === "user" ? "bg-gray-700" : "bg-gray-800",
@@ -144,7 +147,7 @@ const CodePage = () => {
                                         }} 
                                         className="text-sm overflow-hidden leading-7 text-gray-300"
                                     >
-                                        {message.content || ""}
+                                        {typeof message.content === 'string' ? message.content : ''}
                                     </ReactMarkdown>
                                 </div>
                             ))}

@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Music, Wand2 } from "lucide-react";
 
-import { Heading } from "@/components/heading";
+import { Heading__second } from "@/components/Heading__second";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -51,7 +51,7 @@ const MusicPage = () => {
   return ( 
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="pt-8 sm:pt-12 md:pt-16">
-        <Heading
+        <Heading__second
           title="AI Music Generation"
           description="Transform your ideas into melodies with our AI composer."
           icon={Music}

@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { FileAudio, Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { Heading } from "@/components/heading";
+import { Heading__second } from "@/components/Heading__second";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -56,7 +56,7 @@ const VideoPage = () => {
   return ( 
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="pt-8 sm:pt-12 md:pt-16">
-        <Heading
+        <Heading__second
           title="AI Video Generation"
           description="Transform your ideas into captivating videos with our AI creator."
           icon={FileAudio}

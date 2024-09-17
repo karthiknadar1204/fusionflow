@@ -10,7 +10,7 @@ interface HeadingProps {
   bgColor?: string;
 }
 
-export const Heading = ({
+export const Heading__second = ({
   title,
   description,
   icon: Icon,
