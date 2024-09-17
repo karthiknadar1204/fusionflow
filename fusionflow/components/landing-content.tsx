@@ -2,48 +2,35 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const testimonials = [
+const features = [
   {
-    name: "Joel",
-    avatar: "J",
-    title: "Software Engineer",
-    description: "This is the best application I've ever used!",
+    title: "AI-Powered Conversations",
+    description: "Engage in natural language conversations with our advanced AI models.",
   },
   {
-    name: "Antonio",
-    avatar: "A",
-    title: "Designer",
-    description: "I use this daily for generating new photos!",
+    title: "Image Generation",
+    description: "Create stunning visuals with our state-of-the-art image generation capabilities.",
   },
   {
-    name: "Mark",
-    avatar: "M",
-    title: "CEO",
-    description: "This app has changed my life, cannot imagine working without it!",
+    title: "Code Assistance",
+    description: "Get help with coding tasks and debugging from our intelligent code assistant.",
   },
   {
-    name: "Mary",
-    avatar: "M",
-    title: "CFO",
-    description: "The best in class, definitely worth the premium subscription!",
+    title: "Multi-Modal Integration",
+    description: "Seamlessly combine text, image, and code functionalities in one platform.",
   },
 ];
 
 export const LandingContent = () => {
   return (
     <div className="px-10 pb-20">
-      <h2 className="text-center text-4xl text-white font-extrabold mb-10">Testimonials</h2>
+      <h2 className="text-center text-4xl text-white font-extrabold mb-10">Key Features</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {testimonials.map((item) => (
-          <Card key={item.description} className="bg-[#192339] border-none text-white">
+        {features.map((item) => (
+          <Card key={item.title} className="bg-[#192339] border-none text-white">
             <CardHeader>
-              <CardTitle className="flex items-center gap-x-2">
-                <div>
-                  <p className="text-lg">{item.name}</p>
-                  <p className="text-zinc-400 text-sm">{item.title}</p>
-                </div>
-              </CardTitle>
-              <CardContent className="pt-4 px-0">
+              <CardTitle className="text-lg mb-2">{item.title}</CardTitle>
+              <CardContent className="pt-2 px-0 text-sm text-zinc-400">
                 {item.description}
               </CardContent>
             </CardHeader>

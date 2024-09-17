@@ -1,108 +1,110 @@
 "use client";
 
-import React from 'react'
+import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import Image from "next/image";
-import { Montserrat } from 'next/font/google'
-import { Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon } from "lucide-react";
+import { Montserrat } from "next/font/google";
+import {
+  Code,
+  ImageIcon,
+  LayoutDashboard,
+  MessageSquare,
+  Music,
+  Settings,
+  VideoIcon,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
-import { FreeCounter } from './free-counter';
+import { FreeCounter } from "./free-counter";
 
-const poppins = Montserrat ({ weight: '600', subsets: ['latin'] });
+const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
 const routes = [
-    {
-      label: 'Dashboard',
-      icon: LayoutDashboard,
-      href: '/dashboard',
-      color: "text-sky-500"
-    },
-    {
-      label: 'Conversation',
-      icon: MessageSquare,
-      href: '/conversation',
-      color: "text-violet-500",
-    },
-    {
-      label: 'Image Generation',
-      icon: ImageIcon,
-      color: "text-pink-700",
-      href: '/image',
-    },
-    {
-      label: 'Video Generation',
-      icon: VideoIcon,
-      color: "text-orange-700",
-      href: '/video',
-    },
-    {
-      label: 'Music Generation',
-      icon: Music,
-      color: "text-emerald-500",
-      href: '/music',
-    },
-    {
-      label: 'Code Generation',
-      icon: Code,
-      color: "text-green-700",
-      href: '/code',
-    },
-    {
-      label: 'Settings',
-      icon: Settings,
-      href: '/settings',
-    },
-  ];
-  
+  {
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    href: "/dashboard",
+    color: "text-blue-400",
+  },
+  {
+    label: "Chat",
+    icon: MessageSquare,
+    href: "/conversation",
+    color: "text-purple-400",
+  },
+  {
+    label: "Image Creator",
+    icon: ImageIcon,
+    color: "text-pink-400",
+    href: "/image",
+  },
+  {
+    label: "Video Maker",
+    icon: VideoIcon,
+    color: "text-orange-400",
+    href: "/video",
+  },
+  {
+    label: "Music Studio",
+    icon: Music,
+    color: "text-green-400",
+    href: "/music",
+  },
+  {
+    label: "Code Assistant",
+    icon: Code,
+    color: "text-yellow-400",
+    href: "/code",
+  },
+  {
+    label: "Preferences",
+    icon: Settings,
+    href: "/settings",
+    color: "text-gray-400",
+  },
+];
 
 const Sidebar = ({
   apiLimitCount = 0,
-  isPro = false
-}:{
+  isPro = false,
+}: {
   apiLimitCount: number;
   isPro: boolean;
 }) => {
-
-  const pathname=usePathname();
+  const pathname = usePathname();
 
   return (
-    <div>
-            <div className="space-y-4 py-4 flex flex-col h-full bg-[#111827] text-white">
-      <div className="px-3 py-2 flex-1">
-        <Link href="/dashboard" className="flex items-center pl-3 mb-14">
-          <div className="relative h-8 w-8 mr-4">
-            <Image fill alt="Logo" src="/logo.png" />
-          </div>
-          <h1 className={cn("text-2xl font-bold", poppins.className)}>
+    <div className="flex flex-col h-full bg-gradient-to-br from-gray-800 to-gray-900">
+      <div className="p-6">
+        <Link href="/dashboard" className="flex items-center mb-8">
+          <h1 className={cn("text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600", montserrat.className)}>
             FusionFlow
           </h1>
         </Link>
-        <div className="space-y-1">
+        <nav className="space-y-4">
           {routes.map((route) => (
             <Link
-              key={route.href} 
+              key={route.href}
               href={route.href}
               className={cn(
-                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
-                pathname === route.href ? "text-white bg-white/10" : "text-zinc-400",
+                "flex items-center p-3 rounded-xl transition-all duration-200 ease-in-out",
+                pathname === route.href
+                  ? "bg-white/10 shadow-lg"
+                  : "hover:bg-white/5"
               )}
             >
-              <div className="flex items-center flex-1">
-                <route.icon className={cn("h-5 w-5 mr-3", route.color)} />
+              <route.icon className={cn("h-6 w-6 mr-4", route.color)} />
+              <span className={cn("text-sm font-medium", pathname === route.href ? "text-white" : "text-gray-300")}>
                 {route.label}
-              </div>
+              </span>
             </Link>
           ))}
-        </div>
+        </nav>
+      </div>
+      <div className="mt-auto">
+        <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro} />
       </div>
     </div>
-    <FreeCounter
-    apiLimitCount={apiLimitCount} 
-    isPro={isPro}
-    />
-    </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

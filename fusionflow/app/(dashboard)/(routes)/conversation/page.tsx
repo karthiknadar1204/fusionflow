@@ -63,76 +63,84 @@ const ConversationPage = () => {
 
 
   return (
-    <div>
-        <Heading
-            title="Conversation"
-            description="Our most advanced conversation model."
-            icon={MessageSquare}
-            iconColor="text-violet-500"
-            bgColor="bg-violet-500/10"
-        />
-        <div className="px-4 lg:px-8">
-            <div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+        <div className="pt-8 sm:pt-12 md:pt-16">
+            <Heading
+                title="AI Conversation"
+                description="Engage in intelligent dialogue with our advanced AI model."
+                icon={MessageSquare}
+                iconColor="text-blue-400"
+                bgColor="bg-blue-500/10"
+            />
+        </div>
+        <div className="container mx-auto px-4 py-8">
+            <div className="max-w-3xl mx-auto">
             <Form {...form}>
             <form 
               onSubmit={form.handleSubmit(onSubmit)} 
               className="
-                rounded-lg 
-                border 
+                bg-gray-800
+                rounded-xl 
+                border-2
+                border-blue-500
                 w-full 
-                p-4 
-                px-3 
-                md:px-6 
-                focus-within:shadow-sm
-                grid
-                grid-cols-12
-                gap-2
+                p-6
+                focus-within:shadow-lg
+                focus-within:shadow-blue-500/50
+                transition-all
+                duration-300
               "
             >
               <FormField
                 name="prompt"
                 render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0">
+                  <FormItem>
+                    <FormControl>
                       <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                        className="bg-gray-700 border-0 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500"
                         disabled={isLoading} 
-                        placeholder="How do I calculate the radius of a circle?" 
+                        placeholder="Ask me anything..." 
                         {...field}
                       />
                     </FormControl>
                   </FormItem>
                 )}
               />
-              <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
-                Generate
+              <Button 
+                className="w-full mt-4 bg-blue-600 hover:bg-blue-700 transition-colors duration-300" 
+                type="submit" 
+                disabled={isLoading}
+              >
+                {isLoading ? "Thinking..." : "Ask AI"}
               </Button>
             </form>
           </Form>
             </div>
-            <div className="space-y-4 mt-4">
+            <div className="space-y-6 mt-8">
             {isLoading && (
-            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-gray-800 border border-blue-500">
               <Loader />
             </div>
           )}
             {messages.length === 0 && !isLoading && (
-            // <Empty label="No conversation started." />
             <Empty />
           )}
-            <div className="flex flex-col-reverse gap-y-4">
+            <div className="flex flex-col gap-y-6">
             {messages.map((message) => (
               <div 
                 key={message.content} 
                 className={cn(
-                  "p-8 w-full flex items-start gap-x-8 rounded-lg",
-                  message.role === "user" ? "bg-white border border-black/10" : "bg-muted",
+                  "p-6 rounded-lg shadow-md",
+                  message.role === "user" ? "bg-blue-900 ml-auto" : "bg-gray-800",
+                  "max-w-[80%] w-fit"
                 )}
               >
-                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
-                <p className="text-sm">
-                  {message.content}
-                </p>
+                <div className="flex items-start gap-x-4">
+                  {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+                  <p className="text-sm leading-relaxed">
+                    {message.content}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
