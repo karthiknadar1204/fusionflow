@@ -115,7 +115,7 @@ const VideoPage = () => {
             </div>
           )}
           {!video && !isLoading && (
-            <Empty label="No video generated yet. Start by describing your video idea!" />
+            <Empty />
           )}
           {video && (
             <div className="bg-gray-800 rounded-lg p-6 mt-6">

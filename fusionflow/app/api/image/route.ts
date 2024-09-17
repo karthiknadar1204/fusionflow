@@ -7,7 +7,7 @@
 // });
 
 
-//   export async function POST(req:request){
+//   export async function POST(req:Request){
 //     try {
 //         const { userId } = auth();
 //         const body = await req.json();
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
       size: resolution,
     });
 
-    const responseData = response.data.data;
+    const responseData = response.data;
     const serializedData = JSON.stringify(responseData);
 
     return new NextResponse(serializedData, {

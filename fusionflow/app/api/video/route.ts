@@ -9,7 +9,7 @@ const replicate = new Replicate({
   });
 
 
-  export async function POST(req:request){
+  export async function POST(req:Request){
     try {
         const { userId } = auth();
         const body = await req.json();

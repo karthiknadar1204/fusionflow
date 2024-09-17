@@ -110,7 +110,7 @@ const MusicPage = () => {
             </div>
           )}
           {!music && !isLoading && (
-            <Empty label="No music composed yet. Start by describing your musical idea!" />
+            <Empty />
           )}
           {music && (
             <div className="bg-gray-800 rounded-lg p-6 mt-6">

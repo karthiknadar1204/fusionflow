@@ -14,18 +14,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChatCompletionRequestMessage } from "openai";
 import Empty from '@/components/empty';
 import { Loader } from '@/components/loader';
 import { UserAvatar } from '@/components/user-avatar';
 import { BotAvatar } from '@/components/bot-avatar';
 import { useProModal } from "@/hooks/use-pro-modal";
+import { ChatMessage } from '@/lib/types';
+import toast from 'react-hot-toast';
 
 const ConversationPage = () => {
 
     const router = useRouter();
     const proModal = useProModal();
-    const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,7 +40,7 @@ const ConversationPage = () => {
       const onSubmit=async(values: z.infer<typeof formSchema>)=>{
         console.log(values);
         try {
-          const userMessage: ChatCompletionRequestMessage = { role: "user", content: values.prompt };
+          const userMessage = { role: "user", content: values.prompt };
           const newMessages = [...messages, userMessage];
 
           const response = await axios.post('/api/conversation', { messages: newMessages });

@@ -23,7 +23,10 @@ import ReactMarkdown from "react-markdown";
 import { useProModal } from "@/hooks/use-pro-modal";
 import { toast } from "react-hot-toast";
 
-type Message = OpenAI.Chat.ChatCompletionMessage;
+type Message = {
+  content: string;
+  role: "user" | "assistant" | "system";
+};
 
 const CodePage = () => {
     const router = useRouter();
@@ -42,12 +45,12 @@ const CodePage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(values);
         try {
-            const userMessage: Message = { role: "user", content: values.prompt };
+            const userMessage = { role: 'user', content: values.prompt };
             const newMessages = [...messages, userMessage];
 
             const response = await axios.post('/api/code', { messages: newMessages });
             setMessages((current) => [...current, userMessage, response.data]);
-          
+
             form.reset();
         } catch (error:any) {
             console.log(error);
