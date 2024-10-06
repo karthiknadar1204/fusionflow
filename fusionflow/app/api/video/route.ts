@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     });
 
     const output = await replicate.run(
-      "cjwbw/damo-text-to-video:1e205ea73084bd17a0a3b43396e49ba0d6bc2e754e9283b2df49fad2dcf95755",
+      "declare-lab/mustango:1db0c525057769aff3b75995a89f84785f188e87afc090afaa7da7482fc1d3c4",
       {
         input: {
           fps: 8,
@@ -42,3 +42,5 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+
