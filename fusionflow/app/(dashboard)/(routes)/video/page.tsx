@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -19,11 +19,13 @@ import Empty from "@/components/empty";
 import { formSchema } from "./constants";
 import { useProModal } from "@/hooks/use-pro-modal";
 
-const VideoPage = () => {
+const VideoPage = () => { 
   const router = useRouter();
   const proModal = useProModal();
 
   const [video, setVideo] = useState<string>();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,21 +39,37 @@ const VideoPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setVideo(undefined);
+      setIsGenerating(true);
 
       const response = await axios.post('/api/video', values);
 
-      setVideo(response.data[0]);
+      console.log("Response:", response.data);
+      if (response.data && response.data) {
+        setVideo(response.data);
+        console.log("Video generated:", response.data);
+      } else {
+        toast.error("Failed to generate video. Please try again.");
+      }
       form.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen();
+      } else if (error?.response?.status === 503) {
+        toast.error("API is busy. Please try again in a few seconds.");
       } else {
         toast.error("Something went wrong.");
       }
     } finally {
+      setIsGenerating(false);
       router.refresh();
     }
   }
+
+  useEffect(() => {
+    if (video && videoRef.current) {
+      videoRef.current.load();
+    }
+  }, [video]);
 
   return ( 
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
@@ -89,7 +107,7 @@ const VideoPage = () => {
                     <FormControl>
                       <Input
                         className="bg-gray-700 border-0 text-white placeholder-gray-400 focus:ring-2 focus:ring-orange-500"
-                        disabled={isLoading} 
+                        disabled={isLoading || isGenerating} 
                         placeholder="Describe your video idea..." 
                         {...field}
                       />
@@ -100,28 +118,29 @@ const VideoPage = () => {
               <Button 
                 className="w-full mt-4 bg-orange-600 hover:bg-orange-700 transition-colors duration-300" 
                 type="submit" 
-                disabled={isLoading}
+                disabled={isLoading || isGenerating}
               >
-                {isLoading ? "Generating..." : "Generate Video"}
+                {isGenerating ? "Generating..." : "Generate Video"}
                 <Wand2 className="w-4 h-4 ml-2" />
               </Button>
             </form>
           </Form>
         </div>
         <div className="mt-8">
-          {isLoading && (
+          {isGenerating && (
             <div className="p-8 rounded-lg w-full flex items-center justify-center bg-gray-800 border border-orange-500">
               <Loader />
             </div>
           )}
-          {!video && !isLoading && (
+          {!video && !isGenerating && (
             <Empty />
           )}
           {video && (
             <div className="bg-gray-800 rounded-lg p-6 mt-6">
               <h3 className="text-xl font-semibold mb-4">Your AI-Generated Video</h3>
-              <video controls className="w-full aspect-video rounded-lg border bg-black">
-                <source src={video} />
+              <video ref={videoRef} controls className="w-full aspect-video rounded-lg border bg-black">
+                <source src={video} type="video/mp4" />
+                Your browser does not support the video tag.
               </video>
             </div>
           )}
