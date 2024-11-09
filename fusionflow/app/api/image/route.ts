@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { checkSubscription } from "@/lib/subscription";
 
-async function query(data) {
+async function query(data: { inputs: string }) {
   const response = await fetch(
     "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
     {
@@ -42,7 +41,10 @@ export async function POST(req: Request) {
 
     const images = [];
     for (let i = 0; i < parseInt(amount, 10); i++) {
-      const result = await query({ "inputs": prompt });
+      const randomSeed = Math.floor(Math.random() * 1000000);
+      const variationPrompt = `${prompt} (seed: ${randomSeed}, variation: ${i + 1}, unique interpretation)`;
+      
+      const result = await query({ "inputs": variationPrompt });
       const buffer = Buffer.from(await result.arrayBuffer());
       const base64 = buffer.toString('base64');
       const imageUrl = `data:image/jpeg;base64,${base64}`;
@@ -57,3 +59,4 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
