@@ -7,6 +7,9 @@ const nextConfig = {
         "cdn.openai.com"
       ]
     },
+    experimental: {
+      serverActions: true
+    }
   }
   
   module.exports = nextConfig
